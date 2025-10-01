@@ -5,6 +5,9 @@ metadata:
   namespace: efkstack
 spec:
   version: 8.12.2
+  auth:
+    fileRealm:
+    - secretName: elastic-password # ★★★ 1단계에서 만든 Secret의 이름을 여기에 적어줍니다.
   nodeSets:
   - name: default
     count: 2
