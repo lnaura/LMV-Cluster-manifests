@@ -5,10 +5,6 @@ metadata:
   namespace: efkstack
 spec:
   version: 8.12.2
-  http: # ⬅️ 이 부분을 추가합니다.
-    service:
-      spec:
-        type: LoadBalancer # ⬅️ 서비스 타입을 LoadBalancer로 지정
   nodeSets:
   - name: default
     count: 2
@@ -16,10 +12,6 @@ spec:
       node.store.allow_mmap: false
     podTemplate:
       spec:
-        # S3 플러그인 설치 - Init Container
-        initContainers:
-        - name: install-plugins
-          command: ["sh", "-c", "bin/elasticsearch-plugin install --batch repository-s3"]
         containers:
         - name: elasticsearch
           resources:
