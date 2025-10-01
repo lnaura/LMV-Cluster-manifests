@@ -14,11 +14,6 @@ spec:
     count: 2
     config:
       node.store.allow_mmap: false
-    # --- ▼▼▼ 이 부분을 추가 ▼▼▼ ---
-  #auth:
-    #fileRealm:
-    #- secretName: elastic-password # ★★★ 1단계에서 만든 Secret의 이름을 여기에 적어줍니다.
-  # --- ▲▲▲ 여기까지 추가 ▲▲▲ ---
     podTemplate:
       spec:
         # S3 플러그인 설치 - Init Container
