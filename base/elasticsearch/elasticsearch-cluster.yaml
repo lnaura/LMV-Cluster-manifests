@@ -14,6 +14,8 @@ spec:
     count: 2
     config:
       node.store.allow_mmap: false
+    configMapRef:
+      name: es-s3-settings
     podTemplate:
       spec:
         # S3 플러그인 설치 - Init Container
@@ -22,6 +24,13 @@ spec:
           command: ["sh", "-c", "bin/elasticsearch-plugin install --batch repository-s3"]
         containers:
         - name: elasticsearch
+          # 2. aws-credentials Secret의 값을 환경변수로 주입합니다.
+          env:
+          - name: aws_access_key
+            valueFrom:
+              secretKeyRef:
+                name: aws-credentials
+                key: access_key
           resources:
             requests:
               memory: 2Gi
@@ -29,7 +38,3 @@ spec:
             limits:
               memory: 2Gi
               cpu: 1
-  # --- 👇 여기가 핵심입니다! ---
-  # Operator에게 Secret을 Keystore에 안전하게 추가하도록 지시합니다.
-  secureSettings:
-  - secretName: aws-credentials
