@@ -13,8 +13,8 @@ spec:
     count: 2
     config:
       node.store.allow_mmap: false
-    configMapRef:
-      name: es-s3-settings # 1단계에서 만든 ConfigMap 이름
+      s3.client.default.access_key: ${aws_access_key}
+      s3.client.default.secret_key: ${aws_secret_key}
     podTemplate:
       spec:
         initContainers:
