@@ -1,0 +1,17 @@
+name: System_kmsg_error_Alert
+# 규칙 타입: 'any'는 필터 조건에 일치하는 로그가 발생할 때마다 즉시 알림을 보냅니다.
+type: any
+# 검색할 Elasticsearch 인덱스 패턴을 지정합니다.
+index: system-kmsg-topic* 
+filter:
+  - range:
+      priority: 
+        gte: 0
+        lte: 3
+realert:
+  minutes: 1
+alert:
+  - post
+http_post_url: "${KMSG_WEBHOOK_URL}"
+http_post_headers:
+  Content-Type: "application/json"

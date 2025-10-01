@@ -1,0 +1,35 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: es-cluster
+  namespace: efkstack
+spec:
+  version: 8.12.2
+  http: # ⬅️ 이 부분을 추가합니다.
+    service:
+      spec:
+        type: LoadBalancer # ⬅️ 서비스 타입을 LoadBalancer로 지정
+  nodeSets:
+  - name: default
+    count: 2
+    config:
+      node.store.allow_mmap: false
+    podTemplate:
+      spec:
+        # S3 플러그인 설치 - Init Container
+        initContainers:
+        - name: install-plugins
+          command: ["sh", "-c", "bin/elasticsearch-plugin install --batch repository-s3"]
+        containers:
+        - name: elasticsearch
+          resources:
+            requests:
+              memory: 2Gi
+              cpu: 1
+            limits:
+              memory: 2Gi
+              cpu: 1
+  # --- 👇 여기가 핵심입니다! ---
+  # Operator에게 Secret을 Keystore에 안전하게 추가하도록 지시합니다.
+  secureSettings:
+  - secretName: aws-credentials

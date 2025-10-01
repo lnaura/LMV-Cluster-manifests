@@ -1,0 +1,16 @@
+name: Service-Error-Alert
+type: any
+index: service-topic* # 인덱스 패턴에 와일드카드 추가
+filter:
+  - term:
+      is_error: true
+query_key:
+  - sourceIP
+  - result
+realert:
+  minutes: 10
+alert:
+  - post
+http_post_url: "${SERVICE_WEBHOOK_URL}"
+http_post_headers:
+  Content-Type: "application/json"

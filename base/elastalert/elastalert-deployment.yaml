@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elastalert
+  namespace: efkstack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elastalert
+  template:
+    metadata:
+      labels:
+        app: elastalert
+    spec:
+      # 1. 볼륨 정의: 원본 템플릿용(configMap)과 최종 설정파일용(emptyDir)
+      volumes:
+      - name: config-template-volume
+        configMap:
+          name: elastalert-config
+      - name: config-volume # 최종 설정 파일이 저장될 쓰기 가능한 공간
+        emptyDir: {}
+        
+      containers:
+      - name: elastalert
+        image: jertel/elastalert2:2.10.0 # ElastAlert2 도커 이미지
+        # 2. Command 오버라이드: ElastAlert 실행 전, 설정 파일 치환 작업 수행
+        command:
+          - "elastalert"
+          - "--verbose"
+          - "--config"
+          - "/opt/elastalert/config.yaml" # 설정 파일 경로 명시
+        
+        # 3. Secret의 URL들을 환경 변수로 주입
+        env:
+        - name: ES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: es-cluster-es-elastic-user
+              key: elastic
+        - name: SERVICE_WEBHOOK_URL # service 룰을 위한 환경 변수
+          valueFrom:
+            secretKeyRef:
+              name: webhook-url-secret # 1단계에서 만든 Secret
+              key: service_post_url   # Secret 안의 키
+        - name: AUTH_WEBHOOK_URL    # auth 룰을 위한 환경 변수
+          valueFrom:
+            secretKeyRef:
+              name: webhook-url-secret
+              key: auth_post_url
+        - name: KMSG_WEBHOOK_URL    # kmsg 룰을 위한 환경 변수
+          valueFrom:
+            secretKeyRef:
+              name: webhook-url-secret
+              key: kmsg_post_url 
+        
+        # 4. 볼륨 마운트: 템플릿과 최종 설정파일 경로 지정
+        volumeMounts:
+        - name: config-volume          # 최종 설정파일 (쓰기 가능)
+          mountPath: /opt/elastalert

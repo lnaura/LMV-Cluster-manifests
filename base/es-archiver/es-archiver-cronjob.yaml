@@ -1,0 +1,54 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: es-index-archiver
+  namespace: efkstack
+spec:
+  # 매일 새벽 2시에 실행 
+  schedule: "0 2 * * *"
+  # 이전 작업이 끝나지 않았으면 다음 작업은 실행하지 않음
+  concurrencyPolicy: Forbid
+  # 실패한 작업은 3번까지 재시도
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: archiver
+              # curl과 jq가 모두 포함된 경량 이미지
+              image: alpine/curl:3.14
+              # 컨테이너 시작 시 실행할 명령어
+              command:
+                - "/bin/sh"
+                - "-c"
+                - |
+                  # 1. jq 설치
+                  apk add --no-cache jq
+                  # 2. ConfigMap으로 마운트된 스크립트 실행
+                  sh /scripts/archive-es-indices.sh
+              env:
+                # ❗ 매우 중요: 쿠버네티스 내부의 Elasticsearch 서비스 주소로 변경해야 합니다.
+                - name: ES_HOST
+                  value: "https://es-cluster-es-http:9200"
+                # Secret에 저장된 사용자 이름과 비밀번호를 환경변수로 주입
+                # 필요한 환경 변수를 명시적으로 주입
+                - name: ES_USER
+                  value: "elastic" # 사용자 이름은 Secret에 없으므로 직접 값을 지정
+                - name: ES_PASS
+                  valueFrom:
+                    secretKeyRef:
+                      name: es-cluster-es-elastic-user # 원본 Secret 이름
+                      key: elastic       
+              # 스크립트가 들어있는 ConfigMap을 볼륨으로 마운트
+              volumeMounts:
+                - name: script-volume
+                  mountPath: /scripts
+          # 볼륨 정의
+          volumes:
+            - name: script-volume
+              configMap:
+                name: es-archive-script
+                # 스크립트에 실행 권한(755) 부여
+                defaultMode: 0755
+          # 재시작 정책: Job에는 'OnFailure' 또는 'Never'만 가능
+          restartPolicy: OnFailure

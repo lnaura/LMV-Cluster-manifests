@@ -1,0 +1,42 @@
+# base/kafka-connect/kafka-connect.yaml
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnect
+metadata:
+  name: my-kafka-connect # Kafka Connect 클러스터의 이름
+  namespace: efkstack
+spec:
+  version: 3.6.1 # Strimzi에서 관리하는 Kafka 버전
+  replicas: 1
+  bootstrapServers: 192.168.1.210:9094 # Kafka 클러스터 주소
+  image: jiwon000/my-kafka-connect-es:1.0 # 1단계에서 만든 커스텀 이미지
+  
+  # 2단계에서 설정한 Taint & Toleration 적용
+  template:
+    pod:
+      tolerations:
+        - key: "kafka-connect-node"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+
+  # 3단계의 Truststore Secret과 비밀번호를 안전하게 주입
+  # KAFKA_OPTS를 직접 설정할 필요 없이 Strimzi가 알아서 처리!
+  tls:
+    trustedCertificates:
+      - secretName: es-cluster-es-http-certs-public
+        certificate: ca.crt
+  
+  # Kafka Connect의 기본 설정
+  config:
+    group.id: my-connect-group
+    offset.storage.topic: my_connect_offsets
+    config.storage.topic: my_connect_configs
+    status.storage.topic: my_connect_statuses
+    # ... (기타 CONNECT_ 변수들은 여기에 key: value 형태로 변환)
+    key.converter: org.apache.kafka.connect.json.JsonConverter
+    value.converter: org.apache.kafka.connect.json.JsonConverter
+    key.converter.schemas.enable: false
+    value.converter.schemas.enable: false
+    config.storage.replication.factor: 1
+    offset.storage.replication.factor: 1
+    status.storage.replication.factor: 1

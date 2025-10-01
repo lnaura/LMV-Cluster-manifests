@@ -1,0 +1,26 @@
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: kibana-sample # 배포할 Kibana의 이름
+  namespace: efkstack
+spec:
+  version: 8.12.2 # Elasticsearch와 동일한 버전으로 설정
+  count: 1 # Kibana 인스턴스는 1개만 생성
+  elasticsearchRef:
+    name: es-cluster # 연결할 Elasticsearch 클러스터의 이름
+  http:
+    service:
+      spec:
+        # ECK Operator가 생성할 서비스의 타입을 LoadBalancer로 지정
+        type: LoadBalancer 
+  podTemplate:
+    spec:
+      containers:
+      - name: kibana
+        resources:
+          requests:
+            memory: 1Gi
+            cpu: 0.5
+          limits:
+            memory: 1Gi
+            cpu: 1
