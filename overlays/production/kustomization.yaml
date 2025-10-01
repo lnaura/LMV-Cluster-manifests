@@ -4,6 +4,7 @@ kind: Kustomization
 # base 디렉토리에 있는 모든 애플리케이션(컴포넌트)들을 포함시킵니다.
 resources:
   #- ../../base/metallb
+  - ../../base/namespace
   - ../../base/elasticsearch
   #- ../../base/kibana
   #- ../../base/elastalert
