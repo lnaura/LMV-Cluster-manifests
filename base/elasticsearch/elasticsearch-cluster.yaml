@@ -10,10 +10,27 @@ spec:
     count: 2
     config:
       node.store.allow_mmap: false
+    configMapRef:
+      name: es-s3-settings # 1단계에서 만든 ConfigMap 이름
     podTemplate:
       spec:
+        initContainers:
+        - name: install-plugins
+          command: ["sh", "-c", "bin/elasticsearch-plugin install --batch repository-s3"]
         containers:
         - name: elasticsearch
+          # 2. aws-credentials Secret의 값을 환경 변수로 주입합니다.
+          env:
+          - name: aws_access_key
+            valueFrom:
+              secretKeyRef:
+                name: aws-credentials
+                key: access_key
+          - name: aws_secret_key
+            valueFrom:
+              secretKeyRef:
+                name: aws-credentials
+                key: secret_key
           resources:
             requests:
               memory: 2Gi
