@@ -9,7 +9,10 @@ spec:
   replicas: 1
   bootstrapServers: 192.168.1.210:9094 # Kafka 클러스터 주소
   image: jiwon000/my-kafka-connect-es:1.0 # 1단계에서 만든 커스텀 이미지
-  
+  template:
+    pod:
+      imagePullSecrets:
+        - name: dockerhub-secret
   # 2단계에서 설정한 Taint & Toleration 적용
   # template:
   #   pod:
