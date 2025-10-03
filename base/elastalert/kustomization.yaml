@@ -4,7 +4,6 @@ kind: Kustomization
 # Deployment 리소스를 포함
 resources:
 - elastalert-deployment.yaml
-
 # configMapGenerator를 사용해 여러 파일로부터 하나의 ConfigMap을 생성
 configMapGenerator:
 - name: elastalert-config # 생성될 ConfigMap 이름
