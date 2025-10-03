@@ -13,8 +13,6 @@ spec:
     count: 2
     config:
       node.store.allow_mmap: false
-      s3.client.default.access_key: ${aws_access_key}
-      s3.client.default.secret_key: ${aws_secret_key}
     podTemplate:
       spec:
         initContainers:
@@ -22,18 +20,6 @@ spec:
           command: ["sh", "-c", "bin/elasticsearch-plugin install --batch repository-s3"]
         containers:
         - name: elasticsearch
-          # 2. aws-credentials Secret의 값을 환경 변수로 주입합니다.
-          env:
-          - name: aws_access_key
-            valueFrom:
-              secretKeyRef:
-                name: aws-credentials
-                key: access_key
-          - name: aws_secret_key
-            valueFrom:
-              secretKeyRef:
-                name: aws-credentials
-                key: secret_key
           resources:
             requests:
               memory: 2Gi
@@ -41,3 +27,11 @@ spec:
             limits:
               memory: 2Gi
               cpu: 1
+    # ⬇️ 3. secureSettings 섹션을 추가하여 aws-credentials Secret을 키스토어에 등록합니다.
+    secureSettings:
+    - secretName: aws-credentials
+      entries:
+      - key: s3.client.default.access_key   # Elasticsearch 키스토어에 등록될 설정 키 이름
+        path: access_key                    # aws-credentials Secret 안에 있는 데이터의 키
+      - key: s3.client.default.secret_key   # Elasticsearch 키스토어에 등록될 설정 키 이름
+        path: secret_key                    # aws-credentials Secret 안에 있는 데이터의 키
