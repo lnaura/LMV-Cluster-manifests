@@ -6,6 +6,8 @@ resources:
 
 configMapGenerator:
 - name: elastalert-config
+  options:
+    disableNameSuffixHash: true
   files:
   - ./config.yaml
   - ./service_error_rule.yaml
