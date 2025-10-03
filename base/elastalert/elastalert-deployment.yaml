@@ -24,17 +24,23 @@ spec:
       # 3. 메인 컨테이너 실행 전, 설정 파일을 먼저 생성하는 initContainer
       initContainers:
       - name: config-initializer
-        image: busybox:1.36 # 가벼운 busybox 이미지 사용
+        image: dibi/envsubst:latest # 가벼운 busybox 이미지 사용
         command: ['/bin/sh', '-c']
         args:
           - |
-            # 템플릿 파일(config-template-volume)을 읽어 환경 변수 값을 채운 뒤, 
-            # 공유 볼륨(config-volume)에 최종 설정 파일을 생성합니다.
-            envsubst < /config-templates/config.yaml > /processed-config/config.yaml;
-            envsubst < /config-templates/service_error_rule.yaml > /processed-config/service_error_rule.yaml;
-            envsubst < /config-templates/system_auth_fail_rule.yaml > /processed-config/system_auth_fail_rule.yaml;
-            envsubst < /config-templates/system_kmsg_error_rule.yaml > /processed-config/system_kmsg_error_rule.yaml;
-            echo "Config files initialization complete.";
+             # rules 디렉터리 생성
+             mkdir -p /processed-config/rules;
+            
+             # 메인 설정 파일 생성
+             envsubst < /config-templates/config.yaml > /processed-config/config.yaml;
+            
+             # 규칙 파일들을 rules 디렉터리 안에 생성
+             envsubst < /config-templates/service_error_rule.yaml > /processed-config/rules/service_error_rule.yaml;
+             envsubst < /config-templates/system_auth_fail_rule.yaml > /processed-config/rules/system_auth_fail_rule.yaml;
+             envsubst < /config-templates/system_kmsg_error_rule.yaml > /processed-config/rules/system_kmsg_error_rule.yaml;
+            
+             echo "Config files initialization complete.";
+             ls -R /processed-config; # 생성된 파일 구조 확인용 로그
         # 3. Secret의 URL들을 환경 변수로 주입
         env:
         - name: ES_PASSWORD
@@ -76,7 +82,11 @@ spec:
           - "--config"
           - "/opt/elastalert/config.yaml" # 설정 파일 경로 명시
         
-        # 4. 볼륨 마운트: 템플릿과 최종 설정파일 경로 지정
+        # subPath를 사용하여 파일과 디렉터리를 명확히 분리하여 마운트
         volumeMounts:
-        - name: config-volume          # 최종 설정파일 (쓰기 가능)
-          mountPath: /opt/elastalert
+        - name: config-volume
+          mountPath: /opt/elastalert/config.yaml # config.yaml 파일만 직접 마운트
+          subPath: config.yaml
+        - name: config-volume
+          mountPath: /opt/elastalert/rules # rules 디렉터리만 마운트
+          subPath: rules

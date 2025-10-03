@@ -9,7 +9,7 @@ configMapGenerator:
   options:
     disableNameSuffixHash: true
   files:
-  - ./config.yaml
-  - ./service_error_rule.yaml
-  - ./system_auth_fail_rule.yaml
-  - ./system_kmsg_error_rule.yaml
+  - config.yaml
+  - service_error_rule.yaml
+  - system_auth_fail_rule.yaml
+  - system_kmsg_error_rule.yaml
