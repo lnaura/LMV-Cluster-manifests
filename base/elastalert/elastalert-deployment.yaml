@@ -20,17 +20,21 @@ spec:
           name: elastalert-config
       - name: config-volume # 최종 설정 파일이 저장될 쓰기 가능한 공간
         emptyDir: {}
-        
-      containers:
-      - name: elastalert
-        image: jertel/elastalert2:2.10.0 # ElastAlert2 도커 이미지
-        # 2. Command 오버라이드: ElastAlert 실행 전, 설정 파일 치환 작업 수행
-        command:
-          - "elastalert"
-          - "--verbose"
-          - "--config"
-          - "/opt/elastalert/config.yaml" # 설정 파일 경로 명시
-        
+      
+      # 3. 메인 컨테이너 실행 전, 설정 파일을 먼저 생성하는 initContainer
+      initContainers:
+      - name: config-initializer
+        image: busybox:1.36 # 가벼운 busybox 이미지 사용
+        command: ['/bin/sh', '-c']
+        args:
+          - |
+            # 템플릿 파일(config-template-volume)을 읽어 환경 변수 값을 채운 뒤, 
+            # 공유 볼륨(config-volume)에 최종 설정 파일을 생성합니다.
+            envsubst < /config-templates/config.yaml > /processed-config/config.yaml;
+            envsubst < /config-templates/service_error_rule.yaml > /processed-config/service_error_rule.yaml;
+            envsubst < /config-templates/system_auth_fail_rule.yaml > /processed-config/system_auth_fail_rule.yaml;
+            envsubst < /config-templates/system_kmsg_error_rule.yaml > /processed-config/system_kmsg_error_rule.yaml;
+            echo "Config files initialization complete.";
         # 3. Secret의 URL들을 환경 변수로 주입
         env:
         - name: ES_PASSWORD
@@ -53,6 +57,24 @@ spec:
             secretKeyRef:
               name: webhook-url-secret
               key: kmsg_post_url 
+        
+        # 볼륨 마운트 설정
+        volumeMounts:
+        - name: config-template-volume # 원본 템플릿 (읽기 전용)
+          mountPath: /config-templates
+          readOnly: true
+        - name: config-volume          # 최종 설정 파일 저장소 (쓰기 가능)
+          mountPath: /processed-config
+          
+      containers:
+      - name: elastalert
+        image: jertel/elastalert2:2.10.0 # ElastAlert2 도커 이미지
+        # 2. Command 오버라이드: ElastAlert 실행 전, 설정 파일 치환 작업 수행
+        command:
+          - "elastalert"
+          - "--verbose"
+          - "--config"
+          - "/opt/elastalert/config.yaml" # 설정 파일 경로 명시
         
         # 4. 볼륨 마운트: 템플릿과 최종 설정파일 경로 지정
         volumeMounts:
