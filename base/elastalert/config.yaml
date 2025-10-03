@@ -8,7 +8,7 @@ es_port: 9200
 use_ssl: true
 verify_certs: false
 es_username: elastic
-es_password: "${ES_PASSWORD}"
+es_password: "j4sElasticPassword"
 writeback_index: elastalert_status
 alert_time_limit:
   days: 2
