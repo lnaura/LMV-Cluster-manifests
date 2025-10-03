@@ -2,10 +2,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- es-archiver-cronjob.yaml # 파일 이름은 기존 파일에 맞춰주세요.
+- es-archiver-cronjob.yaml
 
 # 파일로부터 ConfigMap 자동 생성
 configMapGenerator:
 - name: es-archive-script
+  options:
+    disableNameSuffixHash: true
   files:
   - archive-es-indices.sh

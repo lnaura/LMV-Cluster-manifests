@@ -7,7 +7,7 @@ resources:
   - ../../base/elasticsearch
   - ../../base/kibana
   - ../../base/elastalert
-  #- ../../base/es-archiver
+  - ../../base/es-archiver
   #- ../../base/kafka-connector
   - ../../base/secrets
 
