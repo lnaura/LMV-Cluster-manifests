@@ -6,7 +6,7 @@ resources:
   #- ../../base/metallb
   - ../../base/namespace
   - ../../base/elasticsearch
-  #- ../../base/kibana
+  - ../../base/kibana
   #- ../../base/elastalert
   #- ../../base/es-archiver
   #- ../../base/kafka-connector
