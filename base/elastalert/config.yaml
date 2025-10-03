@@ -1,9 +1,9 @@
-rules_folder: /opt/elastalert # rules 서브디렉토리 없이 바로 마운트된 경로를 지정
+rules_folder: /opt/elastalert
 run_every:
   seconds: 10
 buffer_time:
   minutes: 10
-es_host: es-cluster-es-http  # K8s 서비스 이름 사용 (localhost 아님!)
+es_host: es-cluster-es-http
 es_port: 9200
 use_ssl: true
 verify_certs: false
