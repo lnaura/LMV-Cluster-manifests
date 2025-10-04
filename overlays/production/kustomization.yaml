@@ -8,7 +8,7 @@ resources:
   #- ../../base/kibana
   #- ../../base/elastalert
   #- ../../base/es-archiver
-  - ../../base/kafka-connector
+  #- ../../base/kafka-connector
   - ../../base/secrets
 
 # --- 예시: 만약 production 환경에서만 특정 설정을 변경하고 싶다면 ---
