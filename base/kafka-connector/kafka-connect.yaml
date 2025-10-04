@@ -2,13 +2,30 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaConnect
 metadata:
-  name: my-kafka-connect # Kafka Connect 클러스터의 이름
+  name: kafka-connect # Kafka Connect 클러스터의 이름
   namespace: efkstack
+  annotations:
+    # KafkaConnector 리소스를 사용하려면 이 어노테이션이 필요합니다.
+    strimzi.io/use-connector-resources: "true" 
 spec:
   version: 3.6.1 # Strimzi에서 관리하는 Kafka 버전
   replicas: 1
   bootstrapServers: 192.168.1.210:9094 # Kafka 클러스터 주소
-  image: jiwon000/my-kafka-connect-es:1.1 # 1단계에서 만든 커스텀 이미지
+
+  # 추가 ✅: Strimzi의 자동 빌드 기능 설정
+  build:
+    # 1. 빌드된 이미지를 푸시할 컨테이너 레지스트리 정보를 입력합니다.
+    output:
+      type: docker # Docker Hub를 사용하는 경우
+      image: jiwon000/kafka-connect-es:1.0 # 새로 빌드할 이미지 태그 (버전을 올려주는 것이 좋습니다)
+      pushSecret: dockerhub-secret # 2단계에서 생성할 레지스트리 로그인용 시크릿 이름
+    
+    # 2. 설치할 플러그인 목록을 여기에 정의합니다. (Dockerfile의 COPY, RUN을 대체)
+    plugins:
+      - name: kafka-connect-elasticsearch # 플러그인 이름 (관리용)
+        type: zip
+        # Confluent Hub에서 제공하는 공식 다운로드 URL을 사용합니다.
+        url: https://hub-downloads.confluent.io/api/plugins/confluentinc/kafka-connect-elasticsearch/versions/15.0.1/confluentinc-kafka-connect-elasticsearch-15.0.1.zip
 
   # 2단계에서 설정한 Taint & Toleration 적용
   template:
