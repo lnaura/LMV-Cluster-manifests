@@ -24,14 +24,14 @@ spec:
           key: elastic
 
     type.name: "_doc"
-    key.ignore": "true"
-    schema.ignore": "true"
+    key.ignore: "true"
+    schema.ignore: "true"
     
     # --- 성능 최적화 설정 ---
     flush.timeout.ms: 60000
     batch.size: 1000
-    max.in.flight.requests": 1
-    max.buffered.records": 5000
-    linger.ms": 1000
-    connection.timeout.ms": 30000
-    read.timeout.ms": 30000
+    max.in.flight.requests: 1
+    max.buffered.records: 5000
+    linger.ms: 1000
+    connection.timeout.ms: 30000
+    read.timeout.ms: 30000
