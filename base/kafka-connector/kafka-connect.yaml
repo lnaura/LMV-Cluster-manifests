@@ -8,7 +8,7 @@ spec:
   version: 3.6.1 # Strimzi에서 관리하는 Kafka 버전
   replicas: 1
   bootstrapServers: 192.168.1.210:9094 # Kafka 클러스터 주소
-  image: jiwon000/my-kafka-connect-es:1.0 # 1단계에서 만든 커스텀 이미지
+  image: jiwon000/my-kafka-connect-es:1.1 # 1단계에서 만든 커스텀 이미지
 
   # 2단계에서 설정한 Taint & Toleration 적용
   template:
