@@ -23,9 +23,10 @@ spec:
     # 2. 설치할 플러그인 목록을 여기에 정의합니다. (Dockerfile의 COPY, RUN을 대체)
     plugins:
       - name: kafka-connect-elasticsearch # 플러그인 이름 (관리용)
-        type: zip
-        # Confluent Hub에서 제공하는 공식 다운로드 URL을 사용합니다.
-        url: https://hub-downloads.confluent.io/api/plugins/confluentinc/kafka-connect-elasticsearch/versions/15.0.1/confluentinc-kafka-connect-elasticsearch-15.0.1.zip
+        artifacts: # <-- 이 부분을 추가해야 합니다.
+          - type: zip
+            # Confluent Hub에서 제공하는 공식 다운로드 URL을 사용합니다.
+            url: https://hub-downloads.confluent.io/api/plugins/confluentinc/kafka-connect-elasticsearch/versions/15.0.1/confluentinc-kafka-connect-elasticsearch-15.0.1.zip
 
   # 2단계에서 설정한 Taint & Toleration 적용
   template:
