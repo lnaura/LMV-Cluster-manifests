@@ -10,8 +10,17 @@ metadata:
 spec:
   version: 4.1.0 # Strimzi에서 관리하는 Kafka 버전
   replicas: 1
-  bootstrapServers: 192.168.1.210:9094 # Kafka 클러스터 주소
-
+  #bootstrapServers: 192.168.1.210:9094 # Kafka 클러스터 주소
+  bootstrapServers: pkc-e82om.ap-northeast-2.aws.confluent.cloud:9092 # Kafka 클러스터 주소
+  # TLS/SSL 암호화 및 SASL 인증 설정 추가
+  tls: {}
+  authentication:
+    type: plain
+    username: ${confluent-cloud-credentials:username} # Secret의 username 참조
+    passwordSecret:
+      secretName: confluent-cloud-credentials # 5단계에서 만든 Secret 이름
+      password: password  
+      
   # 추가 ✅: Strimzi의 자동 빌드 기능 설정
   build:
     # 1. 빌드된 이미지를 푸시할 컨테이너 레지스트리 정보를 입력합니다.
