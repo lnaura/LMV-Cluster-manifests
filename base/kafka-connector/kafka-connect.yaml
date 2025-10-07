@@ -48,6 +48,9 @@ spec:
   
   # Kafka Connect의 기본 설정
   config:
+    security.protocol: SASL_SSL
+    sasl.mechanism: PLAIN
+    
     group.id: my-connect-group
     offset.storage.topic: my_connect_offsets
     config.storage.topic: my_connect_configs
