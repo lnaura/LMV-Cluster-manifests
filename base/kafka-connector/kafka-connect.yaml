@@ -44,13 +44,6 @@ spec:
           operator: "Equal"
           value: "true"
           effect: "NoSchedule"
-
-  # 3단계의 Truststore Secret과 비밀번호를 안전하게 주입
-  # KAFKA_OPTS를 직접 설정할 필요 없이 Strimzi가 알아서 처리!
-  tls:
-    trustedCertificates:
-      - secretName: es-cluster-es-http-certs-public
-        certificate: ca.crt
   
   # Kafka Connect의 기본 설정
   config:
