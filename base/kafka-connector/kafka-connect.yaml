@@ -16,9 +16,9 @@ spec:
   tls: {}
   authentication:
     type: plain
-    username: ${confluent-cloud-credentials:username} # Secret의 username 참조
     passwordSecret:
       secretName: confluent-cloud-credentials # 5단계에서 만든 Secret 이름
+      username: username
       password: password  
 
   # 추가 ✅: Strimzi의 자동 빌드 기능 설정
