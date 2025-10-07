@@ -50,7 +50,7 @@ spec:
   config:
     security.protocol: SASL_SSL
     sasl.mechanism: PLAIN
-    
+
     group.id: my-connect-group
     offset.storage.topic: my_connect_offsets
     config.storage.topic: my_connect_configs
@@ -60,6 +60,6 @@ spec:
     value.converter: org.apache.kafka.connect.json.JsonConverter
     key.converter.schemas.enable: false
     value.converter.schemas.enable: false
-    config.storage.replication.factor: 1
-    offset.storage.replication.factor: 1
-    status.storage.replication.factor: 1
+    config.storage.replication.factor: 3
+    offset.storage.replication.factor: 3
+    status.storage.replication.factor: 3
