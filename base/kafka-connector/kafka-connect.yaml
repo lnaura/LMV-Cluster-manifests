@@ -13,6 +13,7 @@ spec:
   #bootstrapServers: 192.168.1.210:9094 # Kafka 클러스터 주소
   bootstrapServers: pkc-e82om.ap-northeast-2.aws.confluent.cloud:9092 # Kafka 클러스터 주소
   # TLS/SSL 암호화 및 SASL 인증 설정 추가
+  tls: {}
   authentication:
     type: plain
     username: ${confluent-cloud-credentials:username} # Secret의 username 참조

@@ -22,7 +22,14 @@ spec:
         secretKeyRef:
           name: es-cluster-es-elastic-user # ES 비밀번호가 저장된 Secret
           key: elastic
-
+    # --- 💡 여기에 SSL 설정을 추가합니다 ---
+    es.net.ssl: true
+    es.net.ssl.ca:
+      valueFrom:
+        secretKeyRef:
+          name: es-cluster-es-http-certs-public # Elasticsearch의 CA 인증서가 담긴 Secret
+          key: ca.crt
+          
     type.name: "_doc"
     key.ignore: "true"
     schema.ignore: "true"
