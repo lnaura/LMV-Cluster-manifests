@@ -6,7 +6,7 @@ metadata:
   namespace: efkstack
   labels:
     # 이 라벨을 통해 Strimzi가 어떤 KafkaConnect 클러스터를 타겟으로 할지 결정
-    strimzi.io/cluster: "my-kafka-connect" 
+    strimzi.io/cluster: "kafka-connect" 
 spec:
   class: io.confluent.connect.elasticsearch.ElasticsearchSinkConnector
   tasksMax: 1
@@ -29,7 +29,7 @@ spec:
         secretKeyRef:
           name: es-cluster-es-http-certs-public # Elasticsearch의 CA 인증서가 담긴 Secret
           key: ca.crt
-          
+
     type.name: "_doc"
     key.ignore: "true"
     schema.ignore: "true"

@@ -7,7 +7,7 @@ resources:
 configMapGenerator:
 - name: elastalert-config
   options:
-    disableNameSuffixHash: true
+    disableNameSuffixHash: true  # configmap을 생성할때 뒤에 tag가 붙어서 나오는 것을 방지
   files:
   - config.yaml
   - service_error_rule.yaml
