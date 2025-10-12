@@ -3,6 +3,9 @@ kind: Application
 metadata:
   name: app-of-apps
   namespace: argocd
+  annotations:
+    # 이 부분이 핵심! 가장 먼저 실행되도록 0번 wave로 지정
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   project: default
   source:
