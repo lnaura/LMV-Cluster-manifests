@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kafka-system
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/lnaura/LMV-Cluster-manifests'
+    targetRevision: HEAD
+    path: base/strimzi-operator
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: efkstack
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
