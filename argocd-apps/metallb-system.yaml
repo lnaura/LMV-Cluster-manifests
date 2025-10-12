@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/lnaura/LMV-Cluster-manifests' # 본인 리포지토리 주소
+    repoURL: 'https://github.com/Autoever-Cloud/argocd-lmv-cluster-manifests.git' # 본인 리포지토리 주소
     targetRevision: HEAD
     path: base/metallb # (1)에서 저장한 MetalLB 매니페스트 경로
   destination:
