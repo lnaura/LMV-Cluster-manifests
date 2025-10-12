@@ -18,3 +18,13 @@ spec:
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
+  # ▼▼▼▼▼ 이 부분을 추가하거나 기존 ignoreDifferences에 병합하세요 ▼▼▼▼▼
+  ignoreDifferences:
+  - group: "apiextensions.k8s.io"
+    kind: "CustomResourceDefinition"
+    # 1. CRD의 status는 컨트롤러가 동적으로 업데이트하므로 항상 무시하는 것이 좋습니다.
+    jsonPointers:
+    - /status
+    # 2. Strimzi가 kubectl 출력을 위해 추가하는 spec.versions 필드를 무시합니다.
+    #    Diff에 나온 모든 변경사항이 이 경로 아래에 해당됩니다.
+    - /spec/versions
