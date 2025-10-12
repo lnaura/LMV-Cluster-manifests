@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://github.com/lnaura/LMV-Cluster-manifests' # 본인 리포지토리 주소
     targetRevision: HEAD
-    path: argocd-apps # 바로 이 폴더!
+    path: argocd-apps
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: argocd

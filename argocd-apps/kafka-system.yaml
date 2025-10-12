@@ -3,6 +3,9 @@ kind: Application
 metadata:
   name: kafka-system
   namespace: argocd
+  annotations:
+    # 이 부분이 핵심! 가장 먼저 실행되도록 0번 wave로 지정
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   project: default
   source:
@@ -16,6 +19,7 @@ spec:
     automated:
       prune: true
       selfHeal: true
+      enabled: true
     syncOptions:
     - CreateNamespace=true
   # ▼▼▼▼▼ 이 부분을 추가하거나 기존 ignoreDifferences에 병합하세요 ▼▼▼▼▼

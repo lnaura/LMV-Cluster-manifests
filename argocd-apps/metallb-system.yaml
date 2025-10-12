@@ -3,6 +3,9 @@ kind: Application
 metadata:
   name: metallb-system
   namespace: argocd
+  annotations:
+    # 이 부분이 핵심! 가장 먼저 실행되도록 0번 wave로 지정
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   project: default
   source:
@@ -18,3 +21,12 @@ spec:
       selfHeal: true
     syncOptions:
     - CreateNamespace=true # 네임스페이스가 없으면 자동으로 생성
+  ignoreDifferences:
+  - group: apiextensions.k8s.io
+    kind: CustomResourceDefinition
+    # .metallb.io 로 끝나는 모든 CRD에 대해 규칙 적용
+    jqPathExpressions:
+    - '.metadata.name | test("\\.metallb\\.io$")'
+    # Webhook 설정에 있는 caBundle 필드를 무시
+    jsonPointers:
+    - /spec/conversion/webhook/clientConfig/caBundle
