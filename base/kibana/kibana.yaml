@@ -19,9 +19,14 @@ spec:
   config:
     server.publicBaseUrl: "https://172.20.10.4:5601"
     xpack.security.authc.providers:
-      anonymous:
-        anonymous1:
-          order: 100
+      basic.basic1:
+        order: 0
+      anonymous.anonymous1:
+        order: 1
+        credentials:
+          username: "anonymous_user"
+          roles: ["anonymous_dashboard_reader"]
+
     xpack.security.sameSiteCookies: "None" # 'None'은 문자열로 처리
   podTemplate:
     spec:
