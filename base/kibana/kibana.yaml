@@ -13,10 +13,16 @@ spec:
       spec:
         # ECK Operator가 생성할 서비스의 타입을 LoadBalancer로 지정
         type: LoadBalancer 
-  # config:
-  #   server.basePath: "/api/kibana"
-  #   server.publicBaseUrl: "http://172.20.10.4/api/kibana"  
-  #   xpack.security.sameSiteCookies: "None"
+  config:
+    server.publicBaseUrl: "https://172.20.10.4:5601"  
+    xpack.security.authc.providers:
+      anonymous:
+        anonymous1:
+          order: 100
+          credentials:
+            username: "anonymous_user"
+            roles: ["anonymous_dashboard_reader"]
+    xpack.security.sameSiteCookies: "None"
   podTemplate:
     spec:
       containers:
