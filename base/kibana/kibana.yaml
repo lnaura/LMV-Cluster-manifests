@@ -13,9 +13,9 @@ spec:
       spec:
         # ECK Operator가 생성할 서비스의 타입을 LoadBalancer로 지정
         type: LoadBalancer 
-  # configRef:
-  #   configMap:
-  #     name: kibana-extra-config
+  configRef:
+    configMap:
+      name: kibana-extra-config
   podTemplate:
     spec:
       containers:
