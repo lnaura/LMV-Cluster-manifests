@@ -9,4 +9,4 @@ configMapGenerator:
     disableNameSuffixHash: true
   namespace: efkstack
   files:
-  - kibana.yml=kibana-config.yaml 
+  - kibana-config.yaml 
