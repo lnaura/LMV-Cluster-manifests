@@ -1,4 +1,0 @@
-server.publicBaseUrl: "https://172.20.10.4:5601"
-xpack.security.authc.providers.anonymous.anonymous1:
-  order: 100
-xpack.security.sameSiteCookies: None

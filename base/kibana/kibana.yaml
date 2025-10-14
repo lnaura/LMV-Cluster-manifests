@@ -17,9 +17,11 @@ spec:
       selfSignedCertificate:
         disabled: false
   config:
-    configRef:
-      configMap:
-        name: kibana-extra-config
+    server.publicBaseUrl: "https://172.20.10.4:5601"
+    xpack.security.authc.providers:
+      anonymous.anonymous1:
+        order: 100
+    xpack.security.sameSiteCookies: "None" # 'None'은 문자열로 처리
   podTemplate:
     spec:
       containers:
