@@ -19,12 +19,17 @@ spec:
   config:
     server.publicBaseUrl: "https://192.168.202.22:5601"
     xpack.encryptedSavedObjects.encryptionKey: ${KIBANA_ENCRYPTION_KEY}
-    # xpack.security.authc.providers:
-    #   anonymous.anonymous1:
-    #     order: 0
-    #     credentials:
-    #       username: "anonymous_service_account"
-    #       password: "anonymous_service_account_password"
+    xpack.security.authc.providers:
+      anonymous.anonymous1:
+        order: 0
+        credentials:
+          username: "anonymous_service_account"
+          password: "anonymous_service_account_password"
+      # 2. basic 인증은 후순위(order: 1)로 둡니다.
+      basic.basic1:
+        order: 1
+    # 3. [핵심] 인증 제공자 선택 화면을 비활성화합니다.
+    xpack.security.authc.selector.enabled: false
     xpack.security.sameSiteCookies: "None" # 'None'은 문자열로 처리
   podTemplate:
     spec:
