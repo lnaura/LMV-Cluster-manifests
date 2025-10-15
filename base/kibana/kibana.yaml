@@ -19,10 +19,8 @@ spec:
   config:
     server.publicBaseUrl: "https://172.20.10.4:5601"
     xpack.security.authc.providers:
-      basic.basic1:
-        order: 0
       anonymous.anonymous1:
-        order: 1
+        order: 0
         credentials:
           username: "anonymous_service_account"
           password: "anonymous_service_account_password"
