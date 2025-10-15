@@ -6,8 +6,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/lnaura/LMV-Cluster-manifests.git'
-    #repoURL: 'https://github.com/Autoever-Cloud/argocd-lmv-cluster-manifests.git'
+    #repoURL: 'https://github.com/lnaura/LMV-Cluster-manifests.git'
+    repoURL: 'https://github.com/Autoever-Cloud/argocd-lmv-cluster-manifests.git'
     targetRevision: HEAD
     path: base/eck-operator
   destination:
