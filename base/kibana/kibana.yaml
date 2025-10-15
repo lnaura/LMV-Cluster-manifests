@@ -25,8 +25,6 @@ spec:
         credentials:
           username: "anonymous_service_account"
           password: "anonymous_service_account_password"
-      basic.basic1:
-        order: 1
     xpack.security.sameSiteCookies: "None" # 'None'은 문자열로 처리
   podTemplate:
     spec:
