@@ -18,12 +18,15 @@ spec:
         disabled: false
   config:
     server.publicBaseUrl: "https://192.168.202.22:5601"
+    xpack.encryptedSavedObjects.encryptionKey: ${KIBANA_ENCRYPTION_KEY}
     xpack.security.authc.providers:
       anonymous.anonymous1:
         order: 0
         credentials:
           username: "anonymous_service_account"
           password: "anonymous_service_account_password"
+      basic.basic1:
+        order: 1
     xpack.security.sameSiteCookies: "None" # 'None'은 문자열로 처리
   podTemplate:
     spec:
@@ -36,3 +39,18 @@ spec:
           limits:
             memory: 1Gi
             cpu: 1
+        env:
+        - name: KIBANA_ENCRYPTION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: kibana-encryption-key
+              key: key
+        readinessProbe:
+          httpGet:
+            path: /api/status  # 가볍고 빠른 상태 체크 전용 API
+            port: 5601
+            scheme: HTTPS
+          initialDelaySeconds: 30 # Kibana가 시작할 시간을 충분히 줍니다.
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
