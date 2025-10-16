@@ -17,7 +17,7 @@ spec:
       selfSignedCertificate:
         disabled: false
   config:
-    server.publicBaseUrl: "https://192.168.202.22:5601"
+    server.publicBaseUrl: "https://192.168.201.234:55601"
     xpack.encryptedSavedObjects.encryptionKey: ${KIBANA_ENCRYPTION_KEY}
     xpack.security.authc.providers:
       anonymous.anonymous1:
