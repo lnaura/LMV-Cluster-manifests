@@ -17,11 +17,7 @@ spec:
     connection.username: "elastic"
     
     # [보안 강화] 비밀번호를 Secret에서 안전하게 가져오기
-    connection.password:
-      valueFrom:
-        secretKeyRef:
-          name: es-cluster-es-elastic-user # ES 비밀번호가 저장된 Secret
-          key: elastic
+    connection.password: "j4sElasticPassword"
     # --- 💡 여기에 SSL 설정을 추가합니다 ---
     es.net.ssl: true
     es.net.ssl.ca:
