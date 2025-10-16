@@ -7,7 +7,7 @@ spec:
   version: 8.12.2
   nodeSets:
   - name: default
-    count: 2
+    count: 1
     config:
       node.store.allow_mmap: false
     podTemplate:
