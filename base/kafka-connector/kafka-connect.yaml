@@ -36,6 +36,7 @@ spec:
           operator: "Equal"
           value: "true"
           effect: "NoSchedule"
+      # envFrom: 설정해주기
   
   # Kafka Connect의 기본 설정
   config:
