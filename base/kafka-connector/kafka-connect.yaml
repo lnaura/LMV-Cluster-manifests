@@ -38,9 +38,7 @@ spec:
           - type: zip
             # Confluent Hub에서 제공하는 공식 다운로드 URL을 사용합니다.
             url: https://hub-downloads.confluent.io/api/plugins/confluentinc/kafka-connect-elasticsearch/versions/15.0.1/confluentinc-kafka-connect-elasticsearch-15.0.1.zip
-  configProviders:
-    - name: file # Provider의 이름 (자유롭게 지정 가능)
-      class: io.strimzi.kafka.KubernetesSecretConfigProvider
+  
   # 2단계에서 설정한 Taint & Toleration 적용
   template:
     pod:
