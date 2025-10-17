@@ -13,8 +13,8 @@ spec:
   bootstrapServers: 192.168.1.210:9094 # Kafka 클러스터 주소
   tls:
     trustedCertificates:
-      - secretName: es-cluster-es-http-certs-public
-        certificate: ca.crt
+      #- secretName: es-cluster-es-http-certs-public
+      #  certificate: ca.crt
       - secretName: kafka-broker-ca-secret 
         certificate: ca.crt
   build:
