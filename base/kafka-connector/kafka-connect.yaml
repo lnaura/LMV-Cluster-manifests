@@ -11,10 +11,10 @@ spec:
   version: 4.1.0 # Strimzi에서 관리하는 Kafka 버전
   replicas: 1
   bootstrapServers: 192.168.1.210:9094 # Kafka 클러스터 주소
-  tls:
-    trustedCertificates:
-      - secretName: kafka-broker-ca-secret 
-        certificate: ca.crt
+  # tls:
+  #   trustedCertificates:
+  #     - secretName: kafka-broker-ca-secret 
+  #       certificate: ca.crt
   
   externalConfiguration:
     volumes:
@@ -60,7 +60,7 @@ spec:
     offset.storage.topic: my_connect_offsets
     config.storage.topic: my_connect_configs
     status.storage.topic: my_connect_statuses
-    security.protocol: SSL
+    #security.protocol: SSL
     # ... (기타 CONNECT_ 변수들은 여기에 key: value 형태로 변환)
     key.converter: org.apache.kafka.connect.json.JsonConverter
     value.converter: org.apache.kafka.connect.json.JsonConverter
