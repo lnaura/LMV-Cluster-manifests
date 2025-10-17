@@ -27,9 +27,14 @@ spec:
     connection.username: "elastic"
     connection.password: "${file:es-password/elastic}"
 
-    elastic.https.ssl.truststore.type: "PEM"
-    elastic.security.protocol: "SSL"
-    elastic.https.ssl.truststore.certificates: "${file:es-ca-cert/ca.crt}"
+    # elastic.https.ssl.truststore.type: "PEM"
+    # elastic.security.protocol: "SSL"
+    # elastic.https.ssl.truststore.certificates: "${file:es-ca-cert/ca.crt}"
+
+    # --- SSL 설정 수정 ---
+    ssl.truststore.type: "PEM"
+    ssl.truststore.certificates: "${file:es-ca-cert/ca.crt}"
+    # ---------------------
 
     type.name: "_doc"
     key.ignore: "true"
