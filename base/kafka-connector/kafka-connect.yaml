@@ -40,8 +40,6 @@ spec:
   
   # Kafka Connect의 기본 설정
   config:
-    config.providers: secrets
-    config.providers.secrets.class: io.strimzi.kafka.KubernetesSecretConfigProvider
     group.id: my-connect-group
     offset.storage.topic: my_connect_offsets
     config.storage.topic: my_connect_configs

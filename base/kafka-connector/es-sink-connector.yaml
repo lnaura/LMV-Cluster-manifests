@@ -17,10 +17,18 @@ spec:
     connection.username: "elastic"
     
     # [보안 강화] 비밀번호를 Secret에서 안전하게 가져오기
-    connection.password: "${secrets:efkstack/es-cluster-es-elastic-user/elastic}"
+    connection.password: 
+      valueFrom:
+        secretKeyRef:
+          name: es-cluster-es-elastic-user 
+          key: elastic
     # --- 💡 여기에 SSL 설정을 추가합니다 ---
     es.net.ssl: true
-    es.net.ssl.ca: "${secrets:efkstack/es-cluster-es-http-certs-public/ca.crt}"
+    es.net.ssl.ca: 
+      valueFrom:
+        secretKeyRef:
+          name: es-cluster-es-http-certs-public
+          key: ca.crt
 
     type.name: "_doc"
     key.ignore: "true"
