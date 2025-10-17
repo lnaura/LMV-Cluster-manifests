@@ -32,5 +32,6 @@ spec:
     max.in.flight.requests: 1
     max.buffered.records: 5000
     linger.ms: 1000
-    connection.timeout.ms: 30000
+    connection.timeout.ms: 40000
     read.timeout.ms: 30000
+    producer.delivery.timeout.ms: 130000
