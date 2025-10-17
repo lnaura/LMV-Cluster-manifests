@@ -12,10 +12,6 @@ spec:
   tasksMax: 1
   externalConfiguration:
     volumes:
-      # Elasticsearch CA 인증서 Secret을 'es-ca-cert' 라는 이름의 볼륨으로 정의
-      - name: es-truststore
-        secret:
-          secretName: es-truststore-secret
       # Elasticsearch 'elastic' 유저 비밀번호 Secret을 'es-password' 라는 이름의 볼륨으로 정의
       - name: es-password
         secret:
@@ -28,7 +24,7 @@ spec:
     connection.password: "${file:es-password/elastic}"
 
     elastic.https.ssl.truststore.location: "/opt/kafka/external-configuration/es-truststore/truststore.jks"
-    elastic.https.ssl.truststore.password: "${file:es-truststore/truststore.password}"
+    elastic.https.ssl.truststore.password: "${file:/opt/kafka/external-configuration/es-truststore/truststore.password}"
     elastic.security.protocol: "SSL"
 
     type.name: "_doc"
