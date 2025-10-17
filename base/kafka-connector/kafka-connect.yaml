@@ -15,6 +15,8 @@ spec:
     trustedCertificates:
       - secretName: es-cluster-es-http-certs-public
         certificate: ca.crt
+      - secretName: kafka-broker-ca-secret 
+        certificate: ca.crt
   build:
     # 1. 빌드된 이미지를 푸시할 컨테이너 레지스트리 정보를 입력합니다.
     output:
@@ -44,12 +46,6 @@ spec:
             secretKeyRef:
               name: es-cluster-es-elastic-user # Secret 이름
               key: elastic                    # Secret 내부의 Key
-              
-        - name: ES_SSL_CA_CERT # 2. Elasticsearch CA 인증서를 담을 환경 변수 이름
-          valueFrom:
-            secretKeyRef:
-              name: es-cluster-es-http-certs-public # Secret 이름
-              key: ca.crt                           # Secret 내부의 Key
   
   # Kafka Connect의 기본 설정
   config:
@@ -57,7 +53,7 @@ spec:
     offset.storage.topic: my_connect_offsets
     config.storage.topic: my_connect_configs
     status.storage.topic: my_connect_statuses
-    security.protocol: PLAINTEXT
+    security.protocol: SSL
     # ... (기타 CONNECT_ 변수들은 여기에 key: value 형태로 변환)
     key.converter: org.apache.kafka.connect.json.JsonConverter
     value.converter: org.apache.kafka.connect.json.JsonConverter
