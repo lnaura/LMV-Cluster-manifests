@@ -11,10 +11,10 @@ spec:
   version: 4.1.0 # Strimzi에서 관리하는 Kafka 버전
   replicas: 1
   bootstrapServers: 192.168.1.210:9094 # Kafka 클러스터 주소
-  tls:
-    trustedCertificates:
-      - secretName: es-cluster-es-http-certs-public # CA 인증서가 들어있는 Secret 이름
-        certificate: ca.crt                         # Secret 안의 인증서 Key 이름
+  # tls:
+  #   trustedCertificates:
+  #     - secretName: es-cluster-es-http-certs-public # CA 인증서가 들어있는 Secret 이름
+  #       certificate: ca.crt                         # Secret 안의 인증서 Key 이름
   # 추가 ✅: Strimzi의 자동 빌드 기능 설정
   build:
     # 1. 빌드된 이미지를 푸시할 컨테이너 레지스트리 정보를 입력합니다.
