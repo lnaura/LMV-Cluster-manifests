@@ -27,9 +27,8 @@ spec:
     connection.username: "elastic"
     connection.password: "${file:es-password/elastic}"
 
-    ssl.truststore.location: "${file:es-truststore/truststore.jks}"
-    ssl.truststore.password: "${file:es-truststore/truststore.password}"
-    ssl.keystore.type: "JKS"
+    elastic.https.ssl.truststore.location: "${file:es-truststore/truststore.jks}"
+    elastic.https.ssl.truststore.password: "${file:es-truststore/truststore.password}"
 
     type.name: "_doc"
     key.ignore: "true"
