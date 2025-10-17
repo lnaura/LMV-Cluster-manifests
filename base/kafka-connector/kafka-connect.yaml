@@ -11,10 +11,10 @@ spec:
   version: 4.1.0 # Strimzi에서 관리하는 Kafka 버전
   replicas: 1
   bootstrapServers: 192.168.1.210:9094 # Kafka 클러스터 주소
-
-  trustedCertificates:
-    - secretName: es-cluster-es-http-certs-public
-      certificate: ca.crt
+  tls:
+    trustedCertificates:
+      - secretName: es-cluster-es-http-certs-public
+        certificate: ca.crt
   build:
     # 1. 빌드된 이미지를 푸시할 컨테이너 레지스트리 정보를 입력합니다.
     output:
@@ -57,6 +57,7 @@ spec:
     offset.storage.topic: my_connect_offsets
     config.storage.topic: my_connect_configs
     status.storage.topic: my_connect_statuses
+    security.protocol: PLAINTEXT
     # ... (기타 CONNECT_ 변수들은 여기에 key: value 형태로 변환)
     key.converter: org.apache.kafka.connect.json.JsonConverter
     value.converter: org.apache.kafka.connect.json.JsonConverter
