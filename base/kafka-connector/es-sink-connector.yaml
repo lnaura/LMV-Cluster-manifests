@@ -20,7 +20,7 @@ spec:
     connection.password: "${env:ES_CONNECTION_PASSWORD}"
     # --- 💡 여기에 SSL 설정을 추가합니다 ---
     es.net.ssl: true
-    #es.net.ssl.ca: "${env:ES_SSL_CA_CERT}"
+    es.net.ssl.ca: "${env:ES_SSL_CA_CERT}"
 
     type.name: "_doc"
     key.ignore: "true"
