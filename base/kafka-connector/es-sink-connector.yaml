@@ -32,8 +32,8 @@ spec:
     # elastic.https.ssl.truststore.certificates: "${file:es-ca-cert/ca.crt}"
 
     # --- SSL 설정 수정 ---
-    ssl.truststore.type: "PEM"
-    ssl.truststore.certificates: "${file:es-ca-cert/ca.crt}"
+    connection.ssl.truststore.type: "PEM"
+    connection.ssl.truststore.certificates: "${file:es-ca-cert/ca.crt}"
     # ---------------------
 
     type.name: "_doc"
