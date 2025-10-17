@@ -27,8 +27,7 @@ spec:
     connection.username: "elastic"
     connection.password: "${file:es-password/elastic}"
 
-    es.net.ssl: true
-    ssl.ca.cert.pem: "${file:es-ca-cert/ca.crt}"
+    connection.ssl.ca.cert.pem: "${file:es-ca-cert/ca.crt}"
 
     type.name: "_doc"
     key.ignore: "true"
