@@ -10,18 +10,13 @@ metadata:
 spec:
   class: io.confluent.connect.elasticsearch.ElasticsearchSinkConnector
   tasksMax: 1
-  externalConfiguration:
-    volumes:
-      # Elasticsearch 'elastic' 유저 비밀번호 Secret을 'es-password' 라는 이름의 볼륨으로 정의
-      - name: es-password
-        secret:
-          secretName: es-cluster-es-elastic-user
+
   # JSON의 config 섹션 내용을 그대로 가져옴
   config:
     topics: "system-auth-topic,service-topic,system-kmsg-topic"
     connection.url: "https://es-cluster-es-http:9200"
     connection.username: "elastic"
-    connection.password: "${file:es-password/elastic}"
+    connection.password: "j4sElasticPassword"
 
     elastic.https.ssl.truststore.location: "/opt/kafka/external-configuration/es-truststore/truststore.jks"
     elastic.https.ssl.truststore.password: "truststorepassword"
