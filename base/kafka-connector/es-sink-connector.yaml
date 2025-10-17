@@ -16,10 +16,10 @@ spec:
     topics: "system-auth-topic,service-topic,system-kmsg-topic"
     connection.url: "https://es-cluster-es-http:9200"
     connection.username: "elastic"
-    connection.password: "j4sElasticPassword"
+    connection.password: "${file:ext-conf-es-password:elastic}"
 
     elastic.https.ssl.truststore.location: "/opt/kafka/external-configuration/es-truststore/truststore.jks"
-    elastic.https.ssl.truststore.password: "truststorepassword"
+    elastic.https.ssl.truststore.password: "${file:ext-conf-es-truststore:truststore.password}"
     elastic.security.protocol: "SSL"
 
     type.name: "_doc"
