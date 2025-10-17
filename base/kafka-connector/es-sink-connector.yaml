@@ -10,20 +10,25 @@ metadata:
 spec:
   class: io.confluent.connect.elasticsearch.ElasticsearchSinkConnector
   tasksMax: 1
+  externalConfiguration:
+    volumes:
+      # Elasticsearch CA 인증서 Secret을 'es-ca-cert' 라는 이름의 볼륨으로 정의
+      - name: es-ca-cert
+        secret:
+          secretName: es-cluster-es-http-certs-public
+      # Elasticsearch 'elastic' 유저 비밀번호 Secret을 'es-password' 라는 이름의 볼륨으로 정의
+      - name: es-password
+        secret:
+          secretName: es-cluster-es-elastic-user
   # JSON의 config 섹션 내용을 그대로 가져옴
   config:
     topics: "system-auth-topic,service-topic,system-kmsg-topic"
     connection.url: "https://es-cluster-es-http:9200"
     connection.username: "elastic"
-    
-    # [보안 강화] 비밀번호를 Secret에서 안전하게 가져오기
-    connection.password: "${env:ES_CONNECTION_PASSWORD}"
-    # --- 💡 여기에 SSL 설정을 추가합니다 ---
+    connection.password: "${file:es-password/elastic}"
+
     es.net.ssl: true
-    #es.net.ssl.ca: "${env:ES_SSL_CA_CERT}"
-    ssl.truststore.location: "/opt/kafka/cluster-ca-certs/ca.p12"
-    ssl.truststore.password: "changeit" # 기본 비밀번호
-    ssl.truststore.type: "PKCS12"
+    ssl.ca.cert.pem: "${file:es-ca-cert/ca.crt}"
 
     type.name: "_doc"
     key.ignore: "true"
