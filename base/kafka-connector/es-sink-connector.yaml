@@ -27,7 +27,7 @@ spec:
     connection.username: "elastic"
     connection.password: "${file:es-password/elastic}"
 
-    connection.ssl.ca.cert.pem: "${file:es-ca-cert/ca.crt}"
+    elastic.https.ssl.truststore.certificates: "${file:es-ca-cert/ca.crt}"
 
     type.name: "_doc"
     key.ignore: "true"
