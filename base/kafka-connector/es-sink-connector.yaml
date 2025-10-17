@@ -26,7 +26,7 @@ spec:
     connection.url: "https://es-cluster-es-http:9200"
     connection.username: "elastic"
     connection.password: "${file:es-password/elastic}"
-
+    elastic.security.protocol: "SSL"
     elastic.https.ssl.truststore.certificates: "${file:es-ca-cert/ca.crt}"
 
     type.name: "_doc"
