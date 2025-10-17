@@ -36,7 +36,18 @@ spec:
           operator: "Equal"
           value: "true"
           effect: "NoSchedule"
-      # envFrom: 설정해주기
+      env:
+        - name: ES_CONNECTION_PASSWORD # 1. Elasticsearch 비밀번호를 담을 환경 변수 이름
+          valueFrom:
+            secretKeyRef:
+              name: es-cluster-es-elastic-user # Secret 이름
+              key: elastic                    # Secret 내부의 Key
+              
+        - name: ES_SSL_CA_CERT # 2. Elasticsearch CA 인증서를 담을 환경 변수 이름
+          valueFrom:
+            secretKeyRef:
+              name: es-cluster-es-http-certs-public # Secret 이름
+              key: ca.crt                           # Secret 내부의 Key
   
   # Kafka Connect의 기본 설정
   config:
