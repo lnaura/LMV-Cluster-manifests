@@ -16,10 +16,10 @@ spec:
     topics: "system-auth-topic,service-topic,system-kmsg-topic"
     connection.url: "https://es-cluster-es-http:9200"
     connection.username: "elastic"
-    connection.password: "${file:ext-conf-es-password:elastic}"
+    connection.password: "${strimzisecrets:es-cluster-es-elastic-user:elastic}"
 
     elastic.https.ssl.truststore.location: "/opt/kafka/external-configuration/es-truststore/truststore.jks"
-    elastic.https.ssl.truststore.password: "${file:ext-conf-es-truststore:truststore.password}"
+    elastic.https.ssl.truststore.password: "${strimzisecrets:es-truststore-secret:truststore.password}"
     elastic.security.protocol: "SSL"
 
     type.name: "_doc"
