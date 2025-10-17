@@ -27,7 +27,7 @@ spec:
     connection.username: "elastic"
     connection.password: "${file:es-password/elastic}"
 
-    elastic.https.ssl.truststore.type = JKS
+    elastic.https.ssl.truststore.type: "PEM"
     elastic.security.protocol: "SSL"
     elastic.https.ssl.truststore.certificates: "${file:es-ca-cert/ca.crt}"
 
