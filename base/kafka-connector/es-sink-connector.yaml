@@ -13,9 +13,9 @@ spec:
   externalConfiguration:
     volumes:
       # Elasticsearch CA 인증서 Secret을 'es-ca-cert' 라는 이름의 볼륨으로 정의
-      - name: es-ca-cert
+      - name: es-truststore
         secret:
-          secretName: es-cluster-es-http-certs-public
+          secretName: es-truststore-secret
       # Elasticsearch 'elastic' 유저 비밀번호 Secret을 'es-password' 라는 이름의 볼륨으로 정의
       - name: es-password
         secret:
@@ -27,14 +27,9 @@ spec:
     connection.username: "elastic"
     connection.password: "${file:es-password/elastic}"
 
-    # elastic.https.ssl.truststore.type: "PEM"
-    # elastic.security.protocol: "SSL"
-    # elastic.https.ssl.truststore.certificates: "${file:es-ca-cert/ca.crt}"
-
-    # --- SSL 설정 수정 ---
-    connection.ssl.truststore.type: "PEM"
-    connection.ssl.truststore.certificates: "${file:es-ca-cert/ca.crt}"
-    # ---------------------
+    elastic.security.protocol: "SSL"
+    elastic.https.ssl.truststore.location: "${file:es-truststore/truststore.jks}"
+    elastic.https.ssl.truststore.password: "${file:es-truststore/truststore.password}"
 
     type.name: "_doc"
     key.ignore: "true"
