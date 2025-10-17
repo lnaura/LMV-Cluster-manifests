@@ -21,9 +21,7 @@ spec:
       - name: es-truststore # 볼륨의 논리적 이름
         secret:
           secretName: es-truststore-secret # 마운트할 Kubernetes Secret의 이름
-      - name: es-password
-        secret:
-          secretName: es-cluster-es-elastic-user
+
   build:
     # 1. 빌드된 이미지를 푸시할 컨테이너 레지스트리 정보를 입력합니다.
     output:

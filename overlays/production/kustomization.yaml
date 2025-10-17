@@ -5,8 +5,8 @@ kind: Kustomization
 resources:
   - ../../base/elasticsearch
   - ../../base/kibana
-  #- ../../base/elastalert
-  #- ../../base/es-archiver
+  - ../../base/elastalert
+  - ../../base/es-archiver
   - ../../base/kafka-connector
   - ../../base/secrets
 
