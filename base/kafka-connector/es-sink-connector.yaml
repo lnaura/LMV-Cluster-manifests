@@ -17,14 +17,10 @@ spec:
     connection.username: "elastic"
     
     # [보안 강화] 비밀번호를 Secret에서 안전하게 가져오기
-    connection.password: "j4sElasticPassword"
+    connection.password: "${secrets:es-cluster-es-elastic-user/elastic}"
     # --- 💡 여기에 SSL 설정을 추가합니다 ---
     es.net.ssl: true
-    es.net.ssl.ca:
-      valueFrom:
-        secretKeyRef:
-          name: es-cluster-es-http-certs-public # Elasticsearch의 CA 인증서가 담긴 Secret
-          key: ca.crt
+    es.net.ssl.ca: "${secrets:es-cluster-es-http-certs-public/ca.crt}"
 
     type.name: "_doc"
     key.ignore: "true"
