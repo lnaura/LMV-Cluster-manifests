@@ -27,7 +27,7 @@ spec:
     connection.username: "elastic"
     connection.password: "${file:es-password/elastic}"
 
-    elastic.https.ssl.truststore.location: "${file:es-truststore/truststore.jks}"
+    elastic.https.ssl.truststore.location: "/opt/kafka/external-configuration/es-truststore/truststore.jks"
     elastic.https.ssl.truststore.password: "${file:es-truststore/truststore.password}"
     elastic.security.protocol: "SSL"
 
