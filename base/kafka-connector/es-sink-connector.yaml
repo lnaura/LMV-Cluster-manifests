@@ -21,10 +21,10 @@ spec:
     # --- 💡 여기에 SSL 설정을 추가합니다 ---
     es.net.ssl: true
     #es.net.ssl.ca: "${env:ES_SSL_CA_CERT}"
-    connection.ssl.truststore.location: "/opt/kafka/cluster-ca-certs/ca.p12"
-    connection.ssl.truststore.password: "changeit" # 기본 비밀번호
-    connection.ssl.truststore.type: "PKCS12"
-    
+    ssl.truststore.location: "/opt/kafka/cluster-ca-certs/ca.p12"
+    ssl.truststore.password: "changeit" # 기본 비밀번호
+    ssl.truststore.type: "PKCS12"
+
     type.name: "_doc"
     key.ignore: "true"
     schema.ignore: "true"
