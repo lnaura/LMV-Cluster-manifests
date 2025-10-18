@@ -48,12 +48,12 @@ spec:
             secretKeyRef:
               name: kibana-encryption-key
               key: key
-        readinessProbe:
-          httpGet:
-            path: /api/status  # 가볍고 빠른 상태 체크 전용 API
-            port: 5601
-            scheme: HTTPS
-          initialDelaySeconds: 30 # Kibana가 시작할 시간을 충분히 줍니다.
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 3
+        # readinessProbe:
+        #   httpGet:
+        #     path: /api/status  # 가볍고 빠른 상태 체크 전용 API
+        #     port: 5601
+        #     scheme: HTTPS
+        #   initialDelaySeconds: 30 # Kibana가 시작할 시간을 충분히 줍니다.
+        #   periodSeconds: 10
+        #   timeoutSeconds: 5
+        #   failureThreshold: 3
