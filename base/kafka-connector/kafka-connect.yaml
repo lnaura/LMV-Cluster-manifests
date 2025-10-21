@@ -10,7 +10,7 @@ metadata:
 spec:
   version: 4.1.0 # Strimzi에서 관리하는 Kafka 버전
   replicas: 1
-  bootstrapServers: 192.168.1.210:9094 # Kafka 클러스터 주소
+  bootstrapServers: 192.168.1.211:9094 # Kafka 클러스터 주소
   # tls:
   #   trustedCertificates:
   #     - secretName: kafka-broker-ca-secret 
